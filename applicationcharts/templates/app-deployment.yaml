@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: tomcat-app
-          image: { { .Values.appimage } }
+          image: vprofile/vprofileapp:V1
           ports:
             - containerPort: 8080
 
