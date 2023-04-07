@@ -36,5 +36,5 @@ spec:
       volumes:
         - name: elastic-volume
           awsElasticBlockStore:
-            volumeID: { { .Values.volumeID } }
+            volumeID: {{ .Values.volumeID }}
             fsType: ext4
