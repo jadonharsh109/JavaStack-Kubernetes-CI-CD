@@ -62,7 +62,7 @@ pipeline {
         }
 
         stage('DOCKER BUILD'){
-            step{
+            steps{
                 script {
                     dockerImage = docker.build DOCKERHUB_REPO + ":$BUILD_NUMBER"
                 }
