@@ -2,6 +2,11 @@ pipeline {
 
     agent any
 
+    tools {
+        maven "MAVEN3"
+        jdk "OracleJDK8"
+        }
+
     environment {
         DOCKERHUB_REPO = "jadonharsh/vprofileapp"
         DOCKERHUB_CRED = "dockerhub"
