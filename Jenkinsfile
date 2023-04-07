@@ -43,24 +43,15 @@ pipeline {
         }
 
 
-
-        stage('DOCKER BUILD'){
-            steps{
-                script {
-                    dockerImage = docker.build DOCKERHUB_REPO + ":$BUILD_NUMBER"
-                }
-            }
+        stage('Build Docker Image'){
+            sh 'docker build -t ${DOCKERHUB_REPO}:${BUILD_NUMBER} .'
         }
 
-        stage('DEPLOY BUILD') {
-            steps{
-                script {
-                    docker.withRegistry( '', DOCKERHUB_CRED ) {
-                    dockerImage.push("$BUILD_NUMBER")
-                    dockerImage.push('latest')
-                    }
-                }
-            }
+        stage('Push Docker Image'){
+            withCredentials([string(credentialsId: 'dockerhub', variable: 'DOKCER_HUB_PASSWORD')]) {
+            sh "docker login -u ${DOCKERHUB_REPO} -p ${DOKCER_HUB_PASSWORD}"
+        }
+        sh 'docker push ${DOCKERHUB_REPO}:${BUILD_NUMBER}'
         }
 
         stage('REMOVE UNUSED DOCKER IMAGE') {
