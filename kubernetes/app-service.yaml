@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: vproapp-service
 spec:
+  selector:
+    app: tomcat-app
+  type: LoadBalancer
   ports:
   - port: 80
-    targetPort: vproapp-port
-    protocol: TCP
-  selector:
-    app: vproapp
-  type: LoadBalancer
+    targetPort: 8080
+

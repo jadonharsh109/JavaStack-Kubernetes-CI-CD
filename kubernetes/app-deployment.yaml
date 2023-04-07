@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: tomcat-app
+  template:
+    metadata:
+      labels:
+        app: tomcat-app
+    spec:
+      containers:
+      - name: tomcat-app
+        image: vprofile/vprofileapp:V1
+        ports:
+        - containerPort: 8080
+      
+      initContainers:
+        - name: init-mydb
+          image: busybox
+          command: ['sh','-c', 'until nslookup vprodb.default.svc.cluster.local; do echo waiting for mydb; sleep 2; done;']
+        - name: init-memcached
+          image: busybox
+          command: ['sh','-c', 'until nslookup vprocache01.default.svc.cluster.local; do echo waiting for mydb; sleep 2; done;']
