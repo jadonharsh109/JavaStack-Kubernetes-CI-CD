@@ -13,15 +13,25 @@ spec:
         app: tomcat-app
     spec:
       containers:
-      - name: tomcat-app
-        image: vprofile/vprofileapp:V1
-        ports:
-        - containerPort: 8080
-      
+        - name: tomcat-app
+          image: { { .Values.appimage } }
+          ports:
+            - containerPort: 8080
+
       initContainers:
         - name: init-mydb
           image: busybox
-          command: ['sh','-c', 'until nslookup vprodb.default.svc.cluster.local; do echo waiting for mydb; sleep 2; done;']
+          command:
+            [
+              "sh",
+              "-c",
+              "until nslookup vprodb.default.svc.cluster.local; do echo waiting for mydb; sleep 2; done;",
+            ]
         - name: init-memcached
           image: busybox
-          command: ['sh','-c', 'until nslookup vprocache01.default.svc.cluster.local; do echo waiting for mydb; sleep 2; done;']
+          command:
+            [
+              "sh",
+              "-c",
+              "until nslookup vprocache01.default.svc.cluster.local; do echo waiting for mydb; sleep 2; done;",
+            ]
