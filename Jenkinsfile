@@ -44,14 +44,20 @@ pipeline {
 
 
         stage('Build Docker Image'){
+            steps{
+                
             sh 'docker build -t ${DOCKERHUB_REPO}:${BUILD_NUMBER} .'
+            }
         }
 
         stage('Push Docker Image'){
+            steps{
+                
             withCredentials([string(credentialsId: 'dockerhub', variable: 'DOKCER_HUB_PASSWORD')]) {
             sh "docker login -u ${DOCKERHUB_REPO} -p ${DOKCER_HUB_PASSWORD}"
+            sh 'docker push ${DOCKERHUB_REPO}:${BUILD_NUMBER}'
+            }
         }
-        sh 'docker push ${DOCKERHUB_REPO}:${BUILD_NUMBER}'
         }
 
         stage('REMOVE UNUSED DOCKER IMAGE') {
