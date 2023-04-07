@@ -69,7 +69,7 @@ pipeline {
         stage('Kubernetes Deploy') {
 	        agent { label 'KOPS' }
                 steps {
-                    sh "helm upgrade --install --force vproifle-stack applicationcharts --set image=${registry}:${BUILD_NUMBER} --namespace prod"
+                    sh "helm upgrade --install --force vproifle-stack applicationcharts --set image=${DOCKERHUB_REPO}:${BUILD_NUMBER} --namespace prod"
             }
         }
 
