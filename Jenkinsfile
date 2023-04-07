@@ -70,7 +70,7 @@ pipeline {
         stage('Kubernetes Deploy') {
 	        agent { label 'KOPS' }
                 steps {
-                    sh "helm upgrade --install --force javastack applicationcharts --set image=${DOCKERHUB_REPO}:${BUILD_NUMBER} volumeID=${VOL_ID}"
+                    sh "helm upgrade --install --force javastackapp applicationcharts --set image=${DOCKERHUB_REPO}:${BUILD_NUMBER} volumeID=${VOL_ID}"
             }
         }
 
