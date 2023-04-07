@@ -53,7 +53,7 @@ pipeline {
         stage('Push Docker Image'){
             steps{
                 
-            withCredentials([string(credentialsId: 'dockerhub', variable: 'DOKCER_HUB_PASSWORD')]) {
+            withCredentials([string(credentialsId: 'dockerhubpass', variable: 'DOKCER_HUB_PASSWORD')]) {
             sh "docker login -u ${DOCKERHUB_REPO} -p ${DOKCER_HUB_PASSWORD}"
             sh 'docker push ${DOCKERHUB_REPO}:${BUILD_NUMBER}'
             }
