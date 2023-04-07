@@ -10,6 +10,7 @@ pipeline {
     environment {
         DOCKERHUB_REPO = "jadonharsh/vprofileapp"
         DOCKERHUB_CRED = "dockerhubpass"
+        VOL_ID = "vol-0c90386274cb9ae63"
     }
 
     stages{
@@ -69,7 +70,7 @@ pipeline {
         stage('Kubernetes Deploy') {
 	        agent { label 'KOPS' }
                 steps {
-                    sh "helm upgrade --install --force vproifle-stack applicationcharts --set image=${DOCKERHUB_REPO}:${BUILD_NUMBER} --namespace prod"
+                    sh "helm upgrade --install --force vproifle-stack applicationcharts --set image=${DOCKERHUB_REPO}:${BUILD_NUMBER} volumeID=${VOL_ID} --namespace prod"
             }
         }
 
